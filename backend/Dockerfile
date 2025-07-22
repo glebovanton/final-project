@@ -20,5 +20,6 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY . .
 # Открываем порт
 EXPOSE 3001
+ENTRYPOINT ["node", "scripts/setup-database.js"]
 # Запускаем приложение
 CMD ["npm", "start"] 
