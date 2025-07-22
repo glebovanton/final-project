@@ -3,7 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 require('dotenv').config({ path: './config.env' });
-const prometheusConfig = require('./prometheusConfig');
+const prometheusConfig = require('./config');
 const { register, httpRequestCounter, responseTimeHistogram } = prometheusConfig;
 
 const app = express();
