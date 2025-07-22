@@ -4,7 +4,6 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 require('dotenv').config({ path: './config.env' });
 
-
 const productsRoutes = require('./routes/products');
 const client = require('prom-client');
 
