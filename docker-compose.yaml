@@ -13,8 +13,10 @@ services:
       timeout: 5s
       retries: 5
 
-  backend:
-    image: ${BACKEND_IMAGE}
+  db-init:
+    build:
+      context: ./backend
+    image: shop-backend
     depends_on:
       db:
         condition: service_healthy
@@ -24,8 +26,26 @@ services:
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
+    command: ["node", "scripts/setup-database.js"]
+    restart: "no"
+
+  backend:
+    build:
+      context: ./backend
+    image: shop-backend
+    depends_on:
+      db:
+        condition: service_healthy
+      db-init:
+        condition: service_completed_successfully
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "4545:3001"
+      - "8090:3001"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3001/api/health"]
       interval: 10s
@@ -34,9 +54,13 @@ services:
       start_period: 5s
 
   frontend:
-    image: ${FRONTEND_IMAGE}
+    build:
+      context: ./frontend
+      args:
+        VITE_BACKEND_URL: ${VITE_BACKEND_URL:-http://localhost:8090/api}
+    image: shop-frontend
     ports: 
-     - "4546:80"
+     - "8080:80"
     depends_on:
       backend:
         condition: service_healthy
