@@ -4,14 +4,23 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 require('dotenv').config({ path: './config.env' });
 const promBundle = require('express-prom-bundle');
-const metricsMiddleware = promBundle({ includeMethod: true, metricsPath: '/api/metrics' });
-
-const productsRoutes = require('./routes/products');
+// Прометей-бандл middleware
+const metricsMiddleware = promBundle({
+  includeMethod: true,
+  includePath: true,
+  includeStatusCode: true,
+  metricsPath: '/api/metrics',
+  promClient: {
+    collectDefaultMetrics: {}
+  }
+});
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(metricsMiddleware);
+
+const productsRoutes = require('./routes/products');
 
 // Middleware
 app.use(helmet());
