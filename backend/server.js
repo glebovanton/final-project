@@ -3,16 +3,15 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 require('dotenv').config({ path: './config.env' });
-const promBundle = require("express-prom-bundle");
-const metricsMiddleware = promBundle({includeMethod: true, metricsPath: '/api/metrics'});
-
-app.use(metricsMiddleware);
+const promBundle = require('express-prom-bundle');
+const metricsMiddleware = promBundle({ includeMethod: true, metricsPath: '/api/metrics' });
 
 const productsRoutes = require('./routes/products');
 
-
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+app.use(metricsMiddleware);
 
 // Middleware
 app.use(helmet());
