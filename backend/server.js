@@ -5,24 +5,30 @@ const morgan = require('morgan');
 require('dotenv').config({ path: './config.env' });
 const prometheusConfig = require('./config');
 const { register, httpRequestCounter, responseTimeHistogram } = prometheusConfig;
+const productsRoutes = require('./routes/products');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
 app.use((req, res, next) => {
   const end = responseTimeHistogram.startTimer();
   res.on('finish', () => {
-    // Record metrics
+    const routePath = req.route?.path || req.originalUrl || req.path;
+
     httpRequestCounter.inc({
       method: req.method,
-      route: req.route ? req.route.path : req.path,
+      route: routePath,
       status: res.statusCode
     });
-    end({ method: req.method, route: req.route ? req.route.path : req.path, status: res.statusCode });
+
+    end({
+      method: req.method,
+      route: routePath,
+      status: res.statusCode
+    });
   });
   next();
 });
-
-const productsRoutes = require('./routes/products');
 
 app.get('/api/metrics', async (req, res) => {
   res.set('Content-Type', register.contentType);
