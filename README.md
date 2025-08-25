@@ -3,7 +3,7 @@
 if dynamic IP than change 
 ip in ~/.ssh/config
 SSH_HOST https://github.com/glebovanton/final-project/settings/secrets/actions
-server_name `sudo nano /etc/nginx/sites-available/devops-node-starter`
+server_name `sudo nano /etc/nginx/sites-available/glebovanton.com`
 Change A record https://dcc.godaddy.com/control/dnsmanagement
 
 ping glebovanton.com

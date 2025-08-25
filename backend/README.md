@@ -137,4 +137,4 @@ describe('API Test', () => {
 
 1. Создайте функции в `utils/validation.js`
 2. Напишите тесты в `tests/utils.test.js`
-3. Экспортируйте функции через `module.exports` 
+3. Экспортируйте функции через `module.exports`
