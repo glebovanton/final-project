@@ -76,6 +76,7 @@ jobs:
             IMAGE=${{ secrets.DOCKER_USER }}/devops-${{ needs.detect-changes.outputs.changed_context }}:${{ github.sha }}
             docker pull $IMAGE
             cd /var/www/glebovanton.com
+            export COMPOSE_PROJECT_NAME=glebovantoncom
 
             if [ "${{ needs.detect-changes.outputs.changed_context }}" = "frontend" ]; then
               sed -i "s|^FRONTEND_IMAGE=.*|FRONTEND_IMAGE=$IMAGE|" .env
