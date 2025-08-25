@@ -10,7 +10,7 @@ jobs:
     outputs:
       changed_context: ${{ steps.set-context.outputs.context }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Detect changed services
         id: filter
@@ -31,6 +31,7 @@ jobs:
             echo "context=backend" >> $GITHUB_OUTPUT
           else
             echo "context=none" >> $GITHUB_OUTPUT
+          fi
 
   checks:
     needs: detect-changes
