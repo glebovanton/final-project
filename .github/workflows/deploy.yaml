@@ -74,7 +74,7 @@ jobs:
           script: |
             IMAGE=${{ secrets.DOCKER_USER }}/devops-${{ needs.detect-changes.outputs.changed_context }}:${{ github.sha }}
             docker pull $IMAGE
-            cd /var/www/https://glebovanton.com
+            cd /var/www/glebovanton.com
 
             if [ "${{ needs.detect-changes.outputs.changed_context }}" = "frontend" ]; then
               sed -i "s|^FRONTEND_IMAGE=.*|FRONTEND_IMAGE=$IMAGE|" .env
