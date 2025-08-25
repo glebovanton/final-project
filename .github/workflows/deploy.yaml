@@ -30,4 +30,4 @@ jobs:
           elif [[ "${{ steps.filter.outputs.backend }}" == "true" ]]; then
             echo "context=backend" >> $GITHUB_OUTPUT
           else
-            echo "context=none" >> $GITHUB_OUTPUT
+            echo "context=frontend" >> $GITHUB_OUTPUT
