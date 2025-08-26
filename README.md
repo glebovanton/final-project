@@ -11,3 +11,7 @@ ping glebovanton.com
 ### Let’s Encrypt (with static ip)
 `sudo apt install -y certbot python3-certbot-nginx`
 `sudo certbot --nginx -d glebovanton.com`
+`sudo certbot --nginx -d devops-grafana.glebovanton.com`
+
+`cd /var/www/glebovanton.com`
+`docker compose up -d`
